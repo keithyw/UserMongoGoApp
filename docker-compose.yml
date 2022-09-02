@@ -31,9 +31,6 @@ services:
       - mongodata:/data/db
     networks:
       - messaging_backend
-    # environment:
-    #   MONGO_INITDB_ROOT_USERNAME: root
-    #   MONGO_INITDB_ROOT_PASSWORD: rootpassword
 
 volumes:
   mongodata:
