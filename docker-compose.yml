@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  app:
+    image: net.keithyw.messageapp/messageapp:latest
+    container_name: message_app
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      - mongodb
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+      DB: ${DB}
+      DB_TIMEOUT_BASE: ${DB_TIMEOUT_BASE}
+      COLLECTION: ${COLLECTION}
+      PORT: ${PORT}
+    networks:
+      - messaging_backend
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+  mongodb:
+    container_name: mongodb_service
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - messaging_backend
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: rootpassword
+
+volumes:
+  mongodata:
+
+networks:
+  messaging_backend:

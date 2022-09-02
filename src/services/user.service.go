@@ -1,0 +1,14 @@
+package services
+
+import "messageapp/models"
+
+// UserService 
+type UserService interface {
+	CreateUser(user models.User) (*models.User, error)
+	DeleteUser(id string) error
+	UpdateUser(id string, user models.User) (*models.User, error)
+
+	FindUserById(id string) (*models.User, error)
+	FindUserByName(name string) (*models.User, error)
+	GetAllUsers() ([]models.User, error)
+}
