@@ -3,7 +3,11 @@ vendor/
 # Build artifact
 src/goapp
 
+.vscode/
+src/.vscode/
 db/
+bin/
+pkg/
 
 # environmental variables. we can use a template that gets copied over instead
 .env

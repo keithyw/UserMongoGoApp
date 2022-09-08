@@ -7,10 +7,10 @@ import (
 	"messageapp/config"
 	"messageapp/controllers"
 	"messageapp/database"
+	"messageapp/repositories"
 	"messageapp/routers"
 	"messageapp/services"
 )
-
 
 func main() {
 	config, err := config.NewConfig()
@@ -19,7 +19,7 @@ func main() {
 	}
 	mongoClient := database.NewMongoDB(config)
 	mongoClient.Init()
-	svc := services.NewUserService(mongoClient.DB.Collection(config.Collection))
+	svc := services.NewUserService(repositories.NewUserRepository(mongoClient.DB.Collection(config.Collection)))
 	userRouter := routers.NewUserRouter(controllers.NewUserController(svc))
 	log.Fatal(http.ListenAndServe(config.Port, userRouter.GetRouter()))
 }
