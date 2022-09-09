@@ -9,8 +9,6 @@ import (
 	"messageapp/models"
 )
 
-var userService UserService
-
 func TestMain(m *testing.M) {
 	
 	println("before test")

@@ -12,7 +12,7 @@ import (
 )
 
 type UserController struct {
-	svc services.UserService
+	Svc services.UserService
 }
 
 func NewUserController(svc services.UserService) UserController {
@@ -33,13 +33,13 @@ func (uc *UserController) UserPostHandler(w http.ResponseWriter, r *http.Request
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	existingUser, _ := uc.svc.FindUserByName(u.Name)
+	existingUser, _ := uc.Svc.FindUserByName(u.Name)
 	if existingUser != nil {
 		http.Error(w, "User already exist by that name", 500)
 		return
 	}
 
-	newUser, err := uc.svc.CreateUser(u)
+	newUser, err := uc.Svc.CreateUser(u)
 	if err != nil {
 		panic(err)
 	}
@@ -67,7 +67,7 @@ func (uc *UserController) UserUpdateHandler(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	vars := mux.Vars(r)
-	updatedUser, err := uc.svc.UpdateUser(vars["id"], u)
+	updatedUser, err := uc.Svc.UpdateUser(vars["id"], u)
 	if err != nil {
 		panic(err)
 	}
@@ -82,7 +82,7 @@ func (uc *UserController) UserUpdateHandler(w http.ResponseWriter, r *http.Reque
 
 func (uc *UserController) UserDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	err := uc.svc.DeleteUser(vars["id"])
+	err := uc.Svc.DeleteUser(vars["id"])
 	if err != nil {
 		panic(err)
 	}
@@ -91,7 +91,7 @@ func (uc *UserController) UserDeleteHandler(w http.ResponseWriter, r *http.Reque
 
 //UsersGetHandle - Gets all users
 func (uc *UserController) UsersGetHandler(w http.ResponseWriter, r *http.Request) {
-	users, err := uc.svc.GetAllUsers()
+	users, err := uc.Svc.GetAllUsers()
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +104,7 @@ func (uc *UserController) UsersGetHandler(w http.ResponseWriter, r *http.Request
 
 func (uc *UserController) UserGetHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	user, err := uc.svc.FindUserByName(vars["name"])
+	user, err := uc.Svc.FindUserByName(vars["name"])
 	if err != nil {
 		panic(err)
 	}
@@ -117,7 +117,7 @@ func (uc *UserController) UserGetHandler(w http.ResponseWriter, r *http.Request)
 
 func (uc *UserController) UserFindByIdHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	user, err := uc.svc.FindUserById(vars["id"])
+	user, err := uc.Svc.FindUserById(vars["id"])
 	if err != nil {
 		panic(err)
 	}
