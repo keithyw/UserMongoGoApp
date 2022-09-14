@@ -18,5 +18,5 @@ RUN apk --no-cache add ca-certificates git
 WORKDIR /
 
 COPY --from=builder /message_app /message_app
-EXPOSE 8080
+EXPOSE 8081
 CMD ["/message_app"]

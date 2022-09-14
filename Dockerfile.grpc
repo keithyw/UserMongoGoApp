@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM FROM golang:1.19.0-bullseye AS builder
 
 ENV GO111MODULE=on
 ENV GOFLAGS=-mod=vendor
@@ -11,7 +11,7 @@ RUN go mod download
 RUN go mod verify
 RUN go build -o /message_grpc_app ./server/cmd.go
 
-FROM golang:alpine
+FROM FROM golang:1.19.0-bullseye
 
 RUN apk --no-cache add ca-certificates git
 

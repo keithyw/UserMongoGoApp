@@ -16,9 +16,9 @@ services:
       COLLECTION: ${COLLECTION}
       PORT: ${PORT}
     networks:
-      - messaging_backend
+      - backend
     ports:
-      - "8080:8080"
+      - "8081:8081"
     restart: on-failure
 
   grpc-app:
@@ -36,7 +36,9 @@ services:
       COLLECTION: ${COLLECTION}
       PORT: ${PORT}
     networks:
-      - messaging_backend
+      - backend
+    expose:
+      - "9090"
     ports:
       - "9000:9000"  
     restart: always  
@@ -50,10 +52,11 @@ services:
     volumes:
       - mongodata:/data/db
     networks:
-      - messaging_backend
+      - backend
 
 volumes:
   mongodata:
 
 networks:
-  messaging_backend:
+  backend:
+    driver: bridge
