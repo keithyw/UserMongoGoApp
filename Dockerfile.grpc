@@ -9,7 +9,7 @@ COPY src/ ./
 
 RUN go mod download
 RUN go mod verify
-RUN go build -o /message_app
+RUN go build -o /message_grpc_app ./server/cmd.go
 
 FROM golang:alpine
 
@@ -17,6 +17,6 @@ RUN apk --no-cache add ca-certificates git
 
 WORKDIR /
 
-COPY --from=builder /message_app /message_app
-EXPOSE 8080
-CMD ["/message_app"]
+COPY --from=builder /message_grpc_app /message_grpc_app
+EXPOSE 9000
+CMD ["/message_grpc_app"]
