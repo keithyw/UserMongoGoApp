@@ -45,6 +45,14 @@ func (svc *UserServiceImpl) FindUserById(id string) (*models.User, error) {
 	return user, nil
 }
 
+func (svc *UserServiceImpl) FindUserByUserId(userId int64) (*models.User, error) {
+	user, err := svc.Ur.FindUserByUserId(userId)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func (svc *UserServiceImpl) FindUserByName(name string) (*models.User, error) {
 	user, err := svc.Ur.FindUserByName(name)
 	if err != nil {

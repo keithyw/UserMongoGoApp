@@ -70,6 +70,16 @@ func (r *UserRepositoryImpl) FindUserById(id string) (*models.User, error) {
 	return user, nil
 }
 
+func (r *UserRepositoryImpl) FindUserByUserId(userId int64) (*models.User, error) {
+	var user *models.User
+	if err := r.collection.FindOne(context.TODO(), bson.M{"user_id": userId}).Decode(&user); err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, mongo.ErrNoDocuments
+		}
+	}
+	return user, nil
+}
+
 func (r *UserRepositoryImpl) FindUserByName(name string) (*models.User, error) {
 	var user *models.User
 	if err := r.collection.FindOne(context.TODO(), bson.M{"name": name}).Decode(&user); err != nil {
